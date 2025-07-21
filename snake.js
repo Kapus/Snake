@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const canvas = document.getElementById('gameCanvas');
     const ctx = canvas.getContext('2d');
     const restartButton = document.getElementById('restartButton');
+    const scoreElement = document.getElementById('score');
     const box = 20;
     let snake, food, score, d, game;
 
@@ -13,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
             y: Math.floor(Math.random() * 19 + 1) * box
         };
         score = 0;
+        scoreElement.innerText = 'Score: 0';
         d = undefined;
         restartButton.style.display = 'none';
         if (game) clearInterval(game);
@@ -67,6 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (snakeX == food.x && snakeY == food.y) {
             score++;
+            scoreElement.innerText = 'Score: ' + score;
             food = {
                 x: Math.floor(Math.random() * 19 + 1) * box,
                 y: Math.floor(Math.random() * 19 + 1) * box
@@ -87,9 +90,6 @@ document.addEventListener('DOMContentLoaded', () => {
             snake.unshift(newHead);
         }
 
-        ctx.fillStyle = '#E0B0FF';
-        ctx.font = '20px Poppins';
-        ctx.fillText('Score: ' + score, 10, 20);
     }
 
     init();
