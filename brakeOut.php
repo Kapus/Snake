@@ -18,7 +18,7 @@
     <?php include 'header.php'; ?>
     <main>
         <h1>Brake Out Game</h1>
-        <canvas id="brakeOutCanvas" width="800" height="500"></canvas>
+        <canvas id="brakeOutCanvas" width="880" height="500"></canvas>
         <button id="restartBrakeOut" style="display:none; margin: 20px auto;">Restart</button>
     </main>
     <?php include 'footer.php'; ?>

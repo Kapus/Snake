@@ -14,13 +14,14 @@ document.addEventListener('DOMContentLoaded', () => {
     let paddleX = (canvas.width - paddleWidth) / 2;
     let rightPressed = false;
     let leftPressed = false;
-    const brickRowCount = 16;
-    const brickColumnCount = 24;
+    const brickRowCount = 15;
+    const brickColumnCount = 28;
     const brickWidth = 30;
     const brickHeight = 16;
     const brickPadding = 4;
-    const brickOffsetTop = 16;
+    const brickOffsetTop = 40;
     const brickOffsetLeft = 8;
+    const brickOffsetRight = 24;
     let score = 0;
     let lives = 3;
     let gameInterval;
@@ -34,15 +35,24 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function drawBricks() {
+        // Add horizontal margins for space between bricks and canvas border
+        // Guarantee fixed space on both sides
+        const sideSpace = 32; // Fixed space on both left and right
+        const availableWidth = canvas.width - 2 * sideSpace;
+        const brickAreaWidth = brickColumnCount * brickWidth + (brickColumnCount - 1) * brickPadding;
+        let scale = 1;
+        if (brickAreaWidth > availableWidth) {
+            scale = availableWidth / brickAreaWidth;
+        }
         for(let c=0; c<brickColumnCount; c++) {
             for(let r=0; r<brickRowCount; r++) {
                 if(bricks[c][r].status == 1) {
-                    let brickX = (c*(brickWidth+brickPadding))+brickOffsetLeft;
-                    let brickY = (r*(brickHeight+brickPadding))+brickOffsetTop;
+                    let brickX = sideSpace + c * (brickWidth + brickPadding) * scale;
+                    let brickY = brickOffsetTop + r * (brickHeight + brickPadding);
                     bricks[c][r].x = brickX;
                     bricks[c][r].y = brickY;
                     ctx.beginPath();
-                    ctx.rect(brickX, brickY, brickWidth, brickHeight);
+                    ctx.rect(brickX, brickY, brickWidth * scale, brickHeight);
                     ctx.fillStyle = '#9D4EDD';
                     ctx.fill();
                     ctx.closePath();
